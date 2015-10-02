@@ -1,0 +1,79 @@
+Index: src/GalileoApp.cpp
+===================================================================
+--- src/GalileoApp.cpp	(revision 158)
++++ src/GalileoApp.cpp	(working copy)
+@@ -296,6 +296,10 @@
+ 		OpenDocumentFile(cmdline.GetConfigFile());
+ 	}
+ 
++	if (cmdline.GetRunSilent()) {
++		HideApplication();
++	}
++
+ 	return TRUE;
+ }
+ 
+Index: src/GalileoCmdLine.cpp
+===================================================================
+--- src/GalileoCmdLine.cpp	(revision 158)
++++ src/GalileoCmdLine.cpp	(working copy)
+@@ -88,7 +88,7 @@
+ const int CGalileoCmdLine::DefaultTimeout = 10;
+ const char CGalileoCmdLine::DefaultConfigFile[] = "iometer.icf";
+ 
+-CGalileoCmdLine::CGalileoCmdLine():m_bSwitches(FALSE), m_bFail(FALSE),
++CGalileoCmdLine::CGalileoCmdLine():m_bSwitches(FALSE), m_bFail(FALSE), m_bRunSilent(FALSE),
+ m_sConfigFile(""), m_sResultFile(""), m_iTimeout(-1), m_bOverrideBatch(FALSE), m_iLoginportnumber(0), m_bShowBigmeter(FALSE)
+ {
+ }
+@@ -215,6 +215,13 @@
+ 		m_bSwitches = TRUE;
+ 		last_switch = toupper(pszParam[0]);
+ 
++		if ( last_switch == 'S' ) //run silend, no UI
++		{
++			m_bRunSilent = TRUE;
++			last_switch = 0;        // don't look for more parameters related to this switch
++			return;
++		}
++
+ 		//////////////////////////////////////////////////////////////////////
+ 		// This is an example of how to allow switches that have meaning on
+ 		// their own, without any additional parameters.
+@@ -320,6 +327,11 @@
+ 		return WELL_KNOWN_TCP_PORT;
+ }
+ 
++BOOL CGalileoCmdLine::GetRunSilent()
++{
++	return m_bRunSilent;
++}
++
+ BOOL CGalileoCmdLine::GetShowBigmeter()
+ {
+ 	return m_bShowBigmeter;
+Index: src/GalileoCmdLine.h
+===================================================================
+--- src/GalileoCmdLine.h	(revision 158)
++++ src/GalileoCmdLine.h	(working copy)
+@@ -75,6 +75,7 @@
+ 	int GetTimeout();
+ 	int GetLoginportnumber();
+ 	BOOL GetShowBigmeter();
++	BOOL GetRunSilent();
+ 
+ 	// Interactive mode is the normal mode of operation for Iometer.
+ 	// If the user specifies both the config file and the results file
+@@ -102,9 +103,10 @@
+ 
+ 	CString m_sConfigFile;	// the specified config file
+ 	CString m_sResultFile;	// the specified result file
+-	int m_iTimeout;		// the specified timeout value
++	int m_iTimeout;			// the specified timeout value
+ 	int m_iLoginportnumber; // the specified port number
+-	BOOL m_bShowBigmeter;// automatically show bigmeter
++	BOOL m_bShowBigmeter;	// automatically show bigmeter
++	BOOL m_bRunSilent;		// run in silent mode, aka hide the UI
+ 
+ 	BOOL m_bOverrideBatch;	// if set, forces IsBatchMode to return FALSE
+ };

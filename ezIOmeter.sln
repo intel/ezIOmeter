@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ezIOmeter_Lib", "ezIOmeter-Lib\ezIOmeter_Lib.csproj", "{EF505103-2722-4E11-8E53-E4C1A1C1BC8E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ezIOmeter", "eZIOmeter\ezIOmeter.csproj", "{D1C022AD-3FA4-493C-BBC7-E385FACBBA55}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EF505103-2722-4E11-8E53-E4C1A1C1BC8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF505103-2722-4E11-8E53-E4C1A1C1BC8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF505103-2722-4E11-8E53-E4C1A1C1BC8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF505103-2722-4E11-8E53-E4C1A1C1BC8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1C022AD-3FA4-493C-BBC7-E385FACBBA55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1C022AD-3FA4-493C-BBC7-E385FACBBA55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1C022AD-3FA4-493C-BBC7-E385FACBBA55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1C022AD-3FA4-493C-BBC7-E385FACBBA55}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

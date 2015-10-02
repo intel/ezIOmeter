@@ -1,0 +1,129 @@
+﻿<!--=Copyright (c) 2015, Intel Corporation
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY 
+AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.-->
+<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	x:Class="ezIOmeter.NavigationDrawer"
+	x:Name="UserControl"
+	d:DesignWidth="640" Width="Auto">
+	<UserControl.Resources>
+
+		<!-- Menu Button Style -->
+		<Style x:Key="MenuButton_style" TargetType="{x:Type Button}">
+			<Setter Property="BorderThickness" Value="0" />
+			<Setter Property="BorderBrush" Value="{x:Null}" />
+			<Setter Property="Background" Value="#FF607D8B" />
+			<Setter Property="OverridesDefaultStyle" Value="True" />
+
+			<!-- Remove default button hover effect. -->
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="{x:Type Button}">
+						<Border Background="{TemplateBinding Background}" Padding="8,4" >
+							<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+						</Border>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+
+			<!-- Button events to handle. -->
+			<Style.Triggers>
+				<Trigger Property="IsMouseOver" Value="True">
+					<Setter Property="Background" Value="#FF4D6470" />
+				</Trigger>
+				<Trigger Property="IsPressed" Value="True">
+					<Setter Property="Background" Value="#FF445862" />
+				</Trigger>
+			</Style.Triggers>
+		</Style>
+		<Storyboard x:Key="OpenDrawer">
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="grid">
+				<EasingDoubleKeyFrame KeyTime="0" Value="-520">
+					<EasingDoubleKeyFrame.EasingFunction>
+						<ExponentialEase EasingMode="EaseInOut" Exponent="5"/>
+					</EasingDoubleKeyFrame.EasingFunction>
+				</EasingDoubleKeyFrame>
+				<EasingDoubleKeyFrame KeyTime="0:0:1" Value="0">
+					<EasingDoubleKeyFrame.EasingFunction>
+						<ExponentialEase EasingMode="EaseInOut" Exponent="5"/>
+					</EasingDoubleKeyFrame.EasingFunction>
+				</EasingDoubleKeyFrame>
+			</DoubleAnimationUsingKeyFrames>
+			<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="OverlayMask">
+				<EasingColorKeyFrame KeyTime="0" Value="#00000000"/>
+				<EasingColorKeyFrame KeyTime="0:0:1" Value="#7F000000"/>
+			</ColorAnimationUsingKeyFrames>
+		</Storyboard>
+		<Storyboard x:Key="CloseDrawer">
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="grid">
+				<EasingDoubleKeyFrame KeyTime="0:0:1" Value="-520">
+					<EasingDoubleKeyFrame.EasingFunction>
+						<ExponentialEase EasingMode="EaseInOut" Exponent="5"/>
+					</EasingDoubleKeyFrame.EasingFunction>
+				</EasingDoubleKeyFrame>
+			</DoubleAnimationUsingKeyFrames>
+			<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="OverlayMask">
+				<EasingColorKeyFrame KeyTime="0:0:1" Value="#00000000"/>
+			</ColorAnimationUsingKeyFrames>
+		</Storyboard>
+		
+		<!-- Close Navigation Drawer Animation -->
+
+		<!-- Open Navigation Drawer Animation -->
+	</UserControl.Resources>
+	<UserControl.Triggers>
+		<EventTrigger RoutedEvent="FrameworkElement.Loaded">
+			<BeginStoryboard Storyboard="{StaticResource OpenDrawer}"/>
+			<BeginStoryboard Storyboard="{StaticResource CloseDrawer}"/>
+		</EventTrigger>
+	</UserControl.Triggers>
+
+	<Grid x:Name="LayoutRoot" ClipToBounds="True" SnapsToDevicePixels="True">
+		<Rectangle x:Name="OverlayMask" Fill="#7F000000" Stroke="Black" MouseDown="OverlayMask_MouseDown"/>
+		<Grid x:Name="grid" Margin="0" HorizontalAlignment="Left" Width="505" MinWidth="505" RenderTransformOrigin="0.5,0.5">
+			<Grid.RenderTransform>
+				<TransformGroup>
+					<ScaleTransform/>
+					<SkewTransform/>
+					<RotateTransform/>
+					<TranslateTransform/>
+				</TransformGroup>
+			</Grid.RenderTransform>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
+
+			<!-- Navigation Drawer Toolbar -->
+			<Grid x:Name="NavigationToolBar" Background="#FF607D8B" VerticalAlignment="Top">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="48" />
+					<ColumnDefinition Width="*" />
+				</Grid.ColumnDefinitions>
+				
+				<!-- Left Menu Buttons -->
+				<Button x:Name="Menu_Back_btn" Width="48" Height="48" Grid.Row="0" Grid.Column="0" Style="{StaticResource MenuButton_style}" Visibility="Visible" Click="Menu_Back_Clicked">
+					<Image Width="24" Height="24" Source="ArrowBackWhite.png"/>
+				</Button>
+			</Grid>
+			
+			<Rectangle x:Name="NavigationDrawerContent" Fill="#FFF4F4F5" Stroke="{x:Null}" Grid.Row="1" />
+		</Grid>
+	</Grid>
+</UserControl>

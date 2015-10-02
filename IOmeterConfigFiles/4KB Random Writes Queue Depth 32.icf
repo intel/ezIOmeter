@@ -1,0 +1,225 @@
+Version 1.1.0
+'TEST SETUP ====================================================================
+'Test Description
+	4KB Random Writes Queue Depth 32
+'Run Time
+'	hours      minutes    seconds
+	0          0          300
+'Ramp Up Time (s)
+	0
+'Default Disk Workers to Spawn
+	NUMBER_OF_CPUS
+'Default Network Workers to Spawn
+	0
+'Record Results
+	ALL
+'Worker Cycling
+'	start      step       step type
+	1          1          LINEAR
+'Disk Cycling
+'	start      step       step type
+	1          1          LINEAR
+'Queue Depth Cycling
+'	start      end        step       step type
+	1          32         2          EXPONENTIAL
+'Test Type
+	NORMAL
+'END test setup
+'RESULTS DISPLAY ===============================================================
+'Record Last Update Results,Update Frequency,Update Type
+	ENABLED,1,LAST_UPDATE
+'Bar chart 1 statistic
+	Total I/Os per Second
+'Bar chart 2 statistic
+	Total MBs per Second (Decimal)
+'Bar chart 3 statistic
+	Average I/O Response Time (ms)
+'Bar chart 4 statistic
+	Maximum I/O Response Time (ms)
+'Bar chart 5 statistic
+	% CPU Utilization (total)
+'Bar chart 6 statistic
+	Total Error Count
+'END results display
+'ACCESS SPECIFICATIONS =========================================================
+'Access specification name,default assignment
+	4KBrandWQD128,DISK
+'size,% of size,% reads,% random,delay,burst,align,reply
+	4096,100,0,100,0,1,4096,0
+'END access specifications
+'MANAGER LIST ==================================================================
+'Manager ID, manager name
+	1,JSOMERS-MOBL
+'Manager network address
+	
+'Worker
+	Worker 1
+'Worker type
+	DISK
+'Default target settings for worker
+'Number of outstanding IOs,test connection rate,transactions per connection,use fixed seed,fixed seed value
+	32,DISABLED,1,DISABLED,0
+'Disk maximum size,starting sector,Data pattern
+	16777216,0,0
+'End default target settings for worker
+'Assigned access specs
+	4KBrandWQD128
+'End assigned access specs
+'Target assignments
+'Target
+	D: "Jaron Backup"
+'Target type
+	DISK
+'End target
+'End target assignments
+'End worker
+'Worker
+	Worker 2
+'Worker type
+	DISK
+'Default target settings for worker
+'Number of outstanding IOs,test connection rate,transactions per connection,use fixed seed,fixed seed value
+	32,DISABLED,1,DISABLED,0
+'Disk maximum size,starting sector,Data pattern
+	16777216,0,0
+'End default target settings for worker
+'Assigned access specs
+	4KBrandWQD128
+'End assigned access specs
+'Target assignments
+'Target
+	D: "Jaron Backup"
+'Target type
+	DISK
+'End target
+'End target assignments
+'End worker
+'Worker
+	Worker 3
+'Worker type
+	DISK
+'Default target settings for worker
+'Number of outstanding IOs,test connection rate,transactions per connection,use fixed seed,fixed seed value
+	32,DISABLED,1,DISABLED,0
+'Disk maximum size,starting sector,Data pattern
+	16777216,0,0
+'End default target settings for worker
+'Assigned access specs
+	4KBrandWQD128
+'End assigned access specs
+'Target assignments
+'Target
+	D: "Jaron Backup"
+'Target type
+	DISK
+'End target
+'End target assignments
+'End worker
+'Worker
+	Worker 4
+'Worker type
+	DISK
+'Default target settings for worker
+'Number of outstanding IOs,test connection rate,transactions per connection,use fixed seed,fixed seed value
+	32,DISABLED,1,DISABLED,0
+'Disk maximum size,starting sector,Data pattern
+	16777216,0,0
+'End default target settings for worker
+'Assigned access specs
+	4KBrandWQD128
+'End assigned access specs
+'Target assignments
+'Target
+	D: "Jaron Backup"
+'Target type
+	DISK
+'End target
+'End target assignments
+'End worker
+'Worker
+	Worker 5
+'Worker type
+	DISK
+'Default target settings for worker
+'Number of outstanding IOs,test connection rate,transactions per connection,use fixed seed,fixed seed value
+	32,DISABLED,1,DISABLED,0
+'Disk maximum size,starting sector,Data pattern
+	16777216,0,0
+'End default target settings for worker
+'Assigned access specs
+	4KBrandWQD128
+'End assigned access specs
+'Target assignments
+'Target
+	D: "Jaron Backup"
+'Target type
+	DISK
+'End target
+'End target assignments
+'End worker
+'Worker
+	Worker 6
+'Worker type
+	DISK
+'Default target settings for worker
+'Number of outstanding IOs,test connection rate,transactions per connection,use fixed seed,fixed seed value
+	32,DISABLED,1,DISABLED,0
+'Disk maximum size,starting sector,Data pattern
+	16777216,0,0
+'End default target settings for worker
+'Assigned access specs
+	4KBrandWQD128
+'End assigned access specs
+'Target assignments
+'Target
+	D: "Jaron Backup"
+'Target type
+	DISK
+'End target
+'End target assignments
+'End worker
+'Worker
+	Worker 7
+'Worker type
+	DISK
+'Default target settings for worker
+'Number of outstanding IOs,test connection rate,transactions per connection,use fixed seed,fixed seed value
+	32,DISABLED,1,DISABLED,0
+'Disk maximum size,starting sector,Data pattern
+	16777216,0,0
+'End default target settings for worker
+'Assigned access specs
+	4KBrandWQD128
+'End assigned access specs
+'Target assignments
+'Target
+	D: "Jaron Backup"
+'Target type
+	DISK
+'End target
+'End target assignments
+'End worker
+'Worker
+	Worker 8
+'Worker type
+	DISK
+'Default target settings for worker
+'Number of outstanding IOs,test connection rate,transactions per connection,use fixed seed,fixed seed value
+	32,DISABLED,1,DISABLED,0
+'Disk maximum size,starting sector,Data pattern
+	16777216,0,0
+'End default target settings for worker
+'Assigned access specs
+	4KBrandWQD128
+'End assigned access specs
+'Target assignments
+'Target
+	D: "Jaron Backup"
+'Target type
+	DISK
+'End target
+'End target assignments
+'End worker
+'End manager
+'END manager list
+Version 1.1.0

@@ -1,0 +1,359 @@
+﻿<!--=Copyright (c) 2015, Intel Corporation
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY 
+AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.-->
+	<Window x:Class="ezIOmeter.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+		mc:Ignorable="d"
+		xmlns:ezIOmeter="clr-namespace:ezIOmeter" 
+        Title="ezIOmeter 2015"
+		Width="1014.5" 
+		WindowStartupLocation="Manual" 
+		FontFamily="Calibri" 
+		MinWidth="600" 
+		Background="#FFCFD8DC" 
+		Foreground="#FF212121" 
+		Height="365" 
+		VerticalContentAlignment="Stretch" 
+		HorizontalContentAlignment="Stretch" 
+		MinHeight="355" 
+		ResizeMode="CanMinimize" 
+		Icon="ezioicontrans_ktQ_icon.ico">
+	<Window.Resources>
+
+		<!-- Action Button Style -->
+		<Style x:Key="ActionButton_style" TargetType="{x:Type Button}">
+			<Setter Property="BorderThickness" Value="0" />
+			<Setter Property="BorderBrush" Value="{x:Null}" />
+			<Setter Property="Background" Value="#FFFF5722" />
+			<Setter Property="Foreground" Value="White" />
+			<Setter Property="FontSize" Value="16" />
+			<Setter Property="FontWeight" Value="Medium" />
+			<Setter Property="OverridesDefaultStyle" Value="True" />
+
+			<!-- Remove default button hover effect. -->
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="{x:Type Button}">
+						<Border Background="{TemplateBinding Background}" Padding="8,4" >
+							<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+						</Border>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+
+			<!-- Button events to handle. -->
+			<Style.Triggers>
+				<Trigger Property="IsMouseOver" Value="True">
+					<Setter Property="Background" Value="#FFCC461C" />
+				</Trigger>
+				<Trigger Property="IsPressed" Value="True">
+					<Setter Property="Background" Value="#FFB33D18" />
+				</Trigger>
+				<Trigger Property="IsEnabled" Value="False">
+					<Setter Property="Background" Value="#4CFF5722" />
+				</Trigger>
+			</Style.Triggers>
+		</Style>
+
+		<!-- Menu Button Style -->
+		<Style x:Key="MenuButton_style" TargetType="{x:Type Button}">
+			<Setter Property="BorderThickness" Value="0" />
+			<Setter Property="BorderBrush" Value="{x:Null}" />
+			<Setter Property="Background" Value="#FF607D8B" />
+			<Setter Property="OverridesDefaultStyle" Value="True" />
+
+			<!-- Remove default button hover effect. -->
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="{x:Type Button}">
+						<Border Background="{TemplateBinding Background}" Padding="8,4" >
+							<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+						</Border>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+
+			<!-- Button events to handle. -->
+			<Style.Triggers>
+				<Trigger Property="IsMouseOver" Value="True">
+					<Setter Property="Background" Value="#FF4D6470" />
+				</Trigger>
+				<Trigger Property="IsPressed" Value="True">
+					<Setter Property="Background" Value="#FF445862" />
+				</Trigger>
+			</Style.Triggers>
+		</Style>
+
+		<!-- Snackbar Button Style -->
+		<Style x:Key="SnackBarButton_style" TargetType="{x:Type Button}">
+			<Setter Property="BorderThickness" Value="0" />
+			<Setter Property="BorderBrush" Value="{x:Null}" />
+			<Setter Property="Background" Value="#FF323232" />
+			<Setter Property="Foreground" Value="#FFFF5722" />
+			<Setter Property="OverridesDefaultStyle" Value="True" />
+
+			<!-- Remove default button hover effect. -->
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="{x:Type Button}">
+						<Border Background="{TemplateBinding Background}" Padding="24,0" >
+							<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+						</Border>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+
+			<!-- Button events to handle. -->
+			<Style.Triggers>
+				<Trigger Property="IsMouseOver" Value="True">
+					<Setter Property="Background" Value="#FF4D6470" />
+				</Trigger>
+				<Trigger Property="IsPressed" Value="True">
+					<Setter Property="Background" Value="#FF445862" />
+				</Trigger>
+			</Style.Triggers>
+		</Style>
+
+		<!-- Tool Tip Style -->
+		<Style TargetType="{x:Type ToolTip}">
+			<Setter Property="Background" Value="#FF323232" />
+			<Setter Property="Foreground" Value="#FFCFD8DC" />
+			<Setter Property="Padding" Value="16,4" />
+			<Setter Property="FontSize" Value="14" />
+		</Style>
+
+		<!-- IOps  -->
+		<ezIOmeter:RangeConverter x:Key="meanIOps_converter" />
+		<ezIOmeter:RangeConverter x:Key="stdevIOps_converter" />
+		<ezIOmeter:RangeConverter x:Key="minIOps_converter" />
+		<ezIOmeter:RangeConverter x:Key="maxIOps_converter" />
+
+		<!-- MBps -->
+		<ezIOmeter:RangeConverter x:Key="meanMBps_converter" />
+		<ezIOmeter:RangeConverter x:Key="stdevMBps_converter" />
+		<ezIOmeter:RangeConverter x:Key="minMBps_converter" />
+		<ezIOmeter:RangeConverter x:Key="maxMBps_converter"/>
+
+		<!-- Latency -->
+		<ezIOmeter:RangeConverter x:Key="latency_converter" />
+
+		<!-- Override Default Selection Colors -->
+		<SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Gray"/>
+		<SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="#FFFFFFFF"/>
+		<SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="Gray"/>
+		<SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="#FFFFFFFF"/>
+
+	</Window.Resources>
+	<Grid>
+
+		<!-- Main App Container -->
+		<Grid x:Name="MainApp_container" UseLayoutRounding="True">
+
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="*" />
+				<RowDefinition Height="Auto" />
+			</Grid.RowDefinitions>
+
+			<!-- App Header -->
+			<StackPanel x:Name="AppToolBar_container" Grid.Row="0" Orientation="Vertical" Background="#FF607D8B" UseLayoutRounding="True">
+
+				<!-- App Toolbar -->
+
+				<!-- App Toolbar -->
+				<Grid x:Name="AppToolBar_gd" Visibility="Visible" Margin="0,0,0,16">
+
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="48" />
+						<ColumnDefinition Width="207*" />
+						<ColumnDefinition Width="640*"/>
+					</Grid.ColumnDefinitions>
+
+					<Grid.RowDefinitions>
+						<RowDefinition Height="59" />
+						<RowDefinition />
+					</Grid.RowDefinitions>
+
+					<!-- Left Menu Buttons -->
+					<Button x:Name="Menu_btn" Grid.Row="0" Grid.Column="0" Style="{StaticResource MenuButton_style}" Click="Menu_Clicked" Visibility="Collapsed" Margin="0,11" >
+						<Image Width="24" Height="24" Source="MenuWhite.png"/>
+					</Button>
+
+					<!-- User Info Dispaly-->
+					<TextBlock x:Name="Welcome_lbl" Grid.Column="1" SnapsToDevicePixels="True" ClipToBounds="True" TextWrapping="WrapWithOverflow" FontSize="16" TextDecorations="{x:Null}" Padding="24,0,72,0" VerticalAlignment="Top" UseLayoutRounding="True" Grid.ColumnSpan="2" Margin="0,52,0,-15" Background="#FF607D8B" Foreground="#FFCFD8DC" Text="Please select a drive to test and which workloads to run. After selecting a drive and workloads click RUN TESTS to begin testing." Grid.RowSpan="2" Height="39"/>
+					<Image x:Name="ezIOmeterLogo" Margin="19,0,0,11" Grid.Column="1" Source="EzIOmeterLogoBlueTrans234.png" ToolTip="ezIOmeter 2015" RenderTransformOrigin="0.522,0.582" Stretch="UniformToFill"/>
+				</Grid>
+			</StackPanel>
+
+			<!-- Progress Indicator -->
+			<ezIOmeter:FlatProgressBar x:Name="RunningTestProgress_pb" Grid.Row="1" SnapsToDevicePixels="True" ClipToBounds="True" IsTabStop="False" MinHeight="8" MaxHeight="8" ScrollViewer.VerticalScrollBarVisibility="Disabled" VerticalContentAlignment="Stretch" VerticalAlignment="Top" Visibility="Collapsed" Height="4" />
+
+			<!-- Drive Selector -->
+			<ComboBox x:Name="SelectedDrive_cmb" Grid.Row="1" Margin="16,16,16,8" IsReadOnly="True" Text="Drive to Test..." FontSize="14" VerticalAlignment="Top" UseLayoutRounding="True" Height="23" Grid.ColumnSpan="2" FontWeight="Medium" SelectionChanged="Drive_SelectionChanged" Foreground="#FF212121" IsEditable="True" ToolTip="Select a drive to test." HorizontalAlignment="Left" Width="962"/>
+
+			<!-- Results Display -->
+			<ScrollViewer Grid.Row="2" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="16,0,10,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" CanContentScroll="True" MinHeight="125" VerticalAlignment="Top">
+				<DataGrid x:Name="ResultsDisplay_dg" ItemsSource="{Binding ResultsToDisplay}" GridLinesVisibility="None" CanUserAddRows="False" AutoGenerateColumns="False" IsManipulationEnabled="False" Background="White" FontSize="14" HeadersVisibility="Column" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Foreground="#FF212121" BorderBrush="{x:Null}" HorizontalAlignment="Left" MinColumnWidth="0" Width="962">
+
+					<!-- Allowed DataGrid Context Commands -->
+					<DataGrid.ContextMenu>
+						<ContextMenu>
+							<MenuItem Command="Copy" />
+							<MenuItem Command="ApplicationCommands.SelectAll" />
+						</ContextMenu>
+					</DataGrid.ContextMenu>
+
+					<DataGrid.Columns>
+
+						<!-- Workload to Run -->
+						<DataGridTemplateColumn CanUserSort="False" CanUserReorder="False" CanUserResize="False">
+							<DataGridTemplateColumn.HeaderTemplate>
+								<DataTemplate>
+									<CheckBox x:Name="SelectAll_ckb" IsChecked="True" Click="SelectAll_Clicked" ToolTip="Select All Workloads"/>
+								</DataTemplate>
+							</DataGridTemplateColumn.HeaderTemplate>
+							<DataGridTemplateColumn.CellTemplate>
+								<DataTemplate>
+									<CheckBox IsChecked="{Binding RunWorkLoad, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0" FontSize="14" SnapsToDevicePixels="True" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" Padding="0" />
+								</DataTemplate>
+							</DataGridTemplateColumn.CellTemplate>
+						</DataGridTemplateColumn>
+
+						<!-- Workload -->
+						<DataGridTextColumn Header="Workload" Width="250" Binding="{Binding WorkloadName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserReorder="False" IsReadOnly="True" FontSize="14" CanUserResize="False"/>
+
+						<!-- IOps -->
+						<DataGridTextColumn Header="Mean IOps" Width="Auto" Binding="{Binding MeanIOps, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserReorder="False" IsReadOnly="True" FontSize="14" CanUserResize="False">
+							<DataGridTextColumn.ElementStyle>
+								<Style TargetType="{x:Type TextBlock}">
+									<Setter Property="Background" Value="{Binding MeanIOps, Converter={StaticResource meanIOps_converter}, Mode=TwoWay}" />
+									<Setter Property="Padding" Value="5,0,0,0" />
+								</Style>
+							</DataGridTextColumn.ElementStyle>
+						</DataGridTextColumn>
+						<DataGridTextColumn Header="Stdev IOps" Width="Auto" Binding="{Binding StdevIOps, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserReorder="False" IsReadOnly="True" Visibility="Collapsed" FontSize="14" CanUserResize="False">
+							<DataGridTextColumn.ElementStyle>
+								<Style TargetType="{x:Type TextBlock}">
+									<Setter Property="Background" Value="{Binding StdevIOps, Converter={StaticResource stdevIOps_converter}, Mode=TwoWay}" />
+									<Setter Property="Padding" Value="5,0,0,0" />
+								</Style>
+							</DataGridTextColumn.ElementStyle>
+						</DataGridTextColumn>
+						<DataGridTextColumn Header="Min IOps" Width="Auto" Binding="{Binding MinIOps, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserReorder="False" IsReadOnly="True" FontSize="14" CanUserResize="False">
+							<DataGridTextColumn.ElementStyle>
+								<Style TargetType="{x:Type TextBlock}">
+									<Setter Property="Background" Value="{Binding MinIOps, Converter={StaticResource minIOps_converter}, Mode=TwoWay}" />
+									<Setter Property="Padding" Value="5,0,0,0" />
+								</Style>
+							</DataGridTextColumn.ElementStyle>
+						</DataGridTextColumn>
+						<DataGridTextColumn Header="Max IOps" Width="Auto" Binding="{Binding MaxIOps, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserReorder="False" IsReadOnly="True" FontSize="14" CanUserResize="False">
+							<DataGridTextColumn.ElementStyle>
+								<Style TargetType="{x:Type TextBlock}">
+									<Setter Property="Background" Value="{Binding MaxIOps, Converter={StaticResource maxIOps_converter}, Mode=TwoWay}" />
+									<Setter Property="Padding" Value="5,0,0,0" />
+								</Style>
+							</DataGridTextColumn.ElementStyle>
+						</DataGridTextColumn>
+
+						<!-- MBps -->
+						<DataGridTextColumn Header="Mean MBps" Width="Auto" Binding="{Binding MeanMBps, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserReorder="False" IsReadOnly="True" Visibility="Visible" FontSize="14" CanUserResize="False">
+							<DataGridTextColumn.ElementStyle>
+								<Style TargetType="{x:Type TextBlock}">
+									<Setter Property="Background" Value="{Binding MeanMBps, Converter={StaticResource meanMBps_converter}, Mode=TwoWay}" />
+									<Setter Property="Padding" Value="5,0,0,0" />
+								</Style>
+							</DataGridTextColumn.ElementStyle>
+						</DataGridTextColumn>
+						<DataGridTextColumn Header="Stdev MBps" Width="Auto" Binding="{Binding StdevMBps, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserReorder="False" IsReadOnly="True" Visibility="Collapsed" FontSize="14" CanUserResize="False">
+							<DataGridTextColumn.ElementStyle>
+								<Style TargetType="{x:Type TextBlock}">
+									<Setter Property="Background" Value="{Binding StdevMBps, Converter={StaticResource stdevMBps_converter}, Mode=TwoWay}" />
+									<Setter Property="Padding" Value="5,0,0,0" />
+								</Style>
+							</DataGridTextColumn.ElementStyle>
+						</DataGridTextColumn>
+						<DataGridTextColumn Header="Min MBps" Width="Auto" Binding="{Binding MinMBps, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserReorder="False" IsReadOnly="True" FontSize="14" CanUserResize="False">
+							<DataGridTextColumn.ElementStyle>
+								<Style TargetType="{x:Type TextBlock}">
+									<Setter Property="Background" Value="{Binding MinMBps, Converter={StaticResource minMBps_converter}, Mode=TwoWay}" />
+									<Setter Property="Padding" Value="5,0,0,0" />
+								</Style>
+							</DataGridTextColumn.ElementStyle>
+						</DataGridTextColumn>
+						<DataGridTextColumn Header="Max MBps" Width="Auto" Binding="{Binding MaxMBps, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserReorder="False" IsReadOnly="True" FontSize="14" CanUserResize="False">
+							<DataGridTextColumn.ElementStyle>
+								<Style TargetType="{x:Type TextBlock}">
+									<Setter Property="Background" Value="{Binding MaxMBps, Converter={StaticResource maxMBps_converter}, Mode=TwoWay}" />
+									<Setter Property="Padding" Value="5,0,0,0" />
+								</Style>
+							</DataGridTextColumn.ElementStyle>
+						</DataGridTextColumn>
+
+						<!-- Latency -->
+						<DataGridTextColumn Header="Latency/Avg Response (ms)" Width="Auto" Binding="{Binding Latency, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserReorder="False" IsReadOnly="True" FontSize="14" CanUserResize="False">
+							<DataGridTextColumn.ElementStyle>
+								<Style TargetType="{x:Type TextBlock}">
+									<Setter Property="Background" Value="{Binding Latency, Converter={StaticResource latency_converter}, Mode=TwoWay}" />
+									<Setter Property="Padding" Value="5,0,0,0" />
+								</Style>
+							</DataGridTextColumn.ElementStyle>
+						</DataGridTextColumn>
+						
+						<!-- Threads Used -->
+						<DataGridTextColumn  Header="Threads Used"  Width="Auto" Binding="{Binding Threads, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserReorder="False" IsReadOnly="True" FontSize="14" CanUserResize="False">
+							<DataGridTextColumn.ElementStyle>
+								<Style TargetType="{x:Type TextBlock}">
+									<Setter Property="Background" Value="{Binding Latency, Converter={StaticResource latency_converter}, Mode=TwoWay}" />
+									<Setter Property="Padding" Value="5,0,0,0" />
+								</Style>
+							</DataGridTextColumn.ElementStyle>
+						</DataGridTextColumn>
+					</DataGrid.Columns>
+				</DataGrid>
+			</ScrollViewer>
+
+			<!-- Run Selected Test -->
+			<Button x:Name="RunTests_btn" Grid.Row="3" Margin="0,8,16,16" HorizontalAlignment="Right" ClickMode="Press" SnapsToDevicePixels="True" Style="{StaticResource ActionButton_style}" Content="RUN TESTS" VerticalAlignment="Bottom" Click="RunTests_Click" IsEnabled="False" ToolTip="Run selected tests"/>
+
+			<!-- Run Selected Test -->
+			<Button x:Name="StopTests_btn" Grid.Row="3" Margin="0,8,16,16" HorizontalAlignment="Right" ClickMode="Press" SnapsToDevicePixels="True" Style="{StaticResource ActionButton_style}" Content="STOP TESTS" VerticalAlignment="Bottom" Click="StopTests_Click" IsEnabled="True" Visibility="Collapsed"/>
+
+		</Grid>
+
+		<!-- Snackbar Container -->
+		<Grid x:Name="toast_message_container" Background="#FF323232" MinHeight="48" Height="48" HorizontalAlignment="Left" Margin="16" VerticalAlignment="Bottom" Visibility="Collapsed">
+
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
+
+			<!-- Toast Message -->
+			<TextBlock x:Name="ToastMessage_tb" Grid.Column="0"  Foreground="#FFCFD8DC" FontSize="14" Padding="24,16" VerticalAlignment="Center" HorizontalAlignment="Left" />
+
+			<!-- Run Selected Test -->
+			<Button x:Name="DismissMessage_btn" Grid.Column="1" Margin="0" ClickMode="Press" SnapsToDevicePixels="True" Style="{StaticResource SnackBarButton_style}" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Click="DismissMessage_Click" Content="DISMISS" />
+		</Grid>
+
+		<!-- Navigation Drawer -->
+		<ezIOmeter:NavigationDrawer x:Name="NavigationDrawer_nav" Visibility="Collapsed" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Stretch"/>
+
+	</Grid>
+</Window>
