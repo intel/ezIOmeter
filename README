@@ -2,6 +2,3 @@ ezIOmeter is a Windows-based client benchmark tool optimized for NVMe* storage d
 
 ezIOmeter was created to simplify the user experience when using IOmeter. IOmeter has an infamous reputation on being difficult to use. This is one solution to provide NVMe* testing capability while also being easy and fast to use.
 
-This guide is intended for publications, OEMs, technical analysts, and individuals who plan to test or evaluate Client NVMe based drives for performance benefits and features. This guide gives specific and detailed instruction on how to use ezIOmeter.
-This guide is significant due to the technology transition from AHCI (SATA) based SSDs to NVMe* /PCIe* based SSDs. Performance benchmarks originally designed for SATA SSDs are not optimized for NVMe SSDs. Hence, the results reflected in these benchmarks may never read maximum performance values stated in the product specification. NVMe allows multiple CPU queues with deep queue depths (up to 64K outstanding IOs). To date, NVMe* benchmark tools are lacking in numbers compared to AHCI (SATA) benchmarking tools.
-For the latest on NVMe technology, go to http://www.nvmexpress.org/.
