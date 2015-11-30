@@ -44,6 +44,12 @@ namespace ezIOmeter
 
         public MainWindow()
         {
+            //make sure that the Restuls folder exists
+            if (Directory.Exists("Results") == false)
+            {
+                Directory.CreateDirectory("Results");
+            }
+
             string[] args = Environment.GetCommandLineArgs();
             if (args.Length >= 2)
             {
